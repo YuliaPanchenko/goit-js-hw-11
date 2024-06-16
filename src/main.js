@@ -1,9 +1,13 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+
 const form = document.querySelector(".gallery-form");
 const btnElem= document.querySelector(".btn");
 const list = document.querySelector(".gallery");
+const loader = document.querySelector(".js-loader");
 
 form.addEventListener("submit", (e)=> {
   e.preventDefault();
@@ -15,6 +19,7 @@ form.addEventListener("submit", (e)=> {
     });
     return;
   }
+  showLoader();
   getImages(inputValue).then(data=>{
     if (data.hits.length === 0) {
       iziToast.error({
@@ -24,9 +29,20 @@ form.addEventListener("submit", (e)=> {
     }
     const markup = renderImages(data.hits);
     list.innerHTML = markup;
+    const lightbox = new SimpleLightbox('.gallery a', {
+      captions: true,
+      captionsData: 'alt',
+      captionDelay: 250,
+      captionPosition: 'bottom',
+    });
+    lightbox.refresh();
+  })
+    .catch(err=>{})
+    .finally(()=>{
+      hideLoader();
+    });
 
-    })
-    .catch(err=>{});
+    e.target.elements.text.value = "";
 });
 
 function getImages(images){
@@ -57,6 +73,7 @@ function renderImages(images){
   const markup = images.map(image => {
     return `
       <li class="card">
+      <a class="card-link" href=${image.webformatURL}>
         <img src="${image.webformatURL}" alt="${image.tags}">
         <div class="stats">
           <div>
@@ -80,4 +97,12 @@ function renderImages(images){
     `;
   }).join('');
   return markup;
+}
+
+function showLoader(){
+  loader.classList.remove("hidden");
+}
+
+function hideLoader(){
+  loader.classList.add("hidden")
 }
