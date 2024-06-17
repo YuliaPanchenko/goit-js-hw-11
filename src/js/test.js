@@ -4,11 +4,6 @@ import "izitoast/dist/css/iziToast.min.css";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-import getImages from "./js/pixabay-api"
-import renderImages from "./js/render-functions"
-// import showLoader from "./js/render-functions"
-// import hideLoader from "./js/render-functions"
-
 const form = document.querySelector(".gallery-form");
 const btnElem= document.querySelector(".btn");
 const list = document.querySelector(".gallery");
@@ -49,6 +44,60 @@ form.addEventListener("submit", (e)=> {
 
     e.target.elements.text.value = "";
 });
+
+function getImages(images){
+  const BASE_URL ="https://pixabay.com";
+  const END_POINT = "/api/";
+  const params = new URLSearchParams({
+    key: "44363127-b4cd04443a44f0f2a63a731a6",
+    q: images, 
+    image_type: "photo",
+    orientation: "horizontal",
+    safesearch: true,
+  });
+  const url = `${BASE_URL}${END_POINT}?${params}`;
+
+  // fetch(url).then(res=>{
+  //   return res.json();
+  // }).then(data=>{
+  //   console.log(data);
+  // })
+
+  return fetch(url).then(res=>res.json());
+
+}
+
+function renderImages(images){
+  list.innerHTML = '';
+
+  const markup = images.map(image => {
+    return `
+      <li class="card">
+      <a class="card-link" href=${image.webformatURL}>
+        <img src="${image.webformatURL}" alt="${image.tags}">
+        <div class="stats">
+          <div>
+            <span class="elements">Likes</span>
+            ${image.likes}
+          </div>
+          <div>
+            <span class="elements">Views</span>
+            ${image.views}
+          </div>
+          <div>
+            <span class="elements">Comments</span>
+            ${image.comments}
+          </div>
+          <div>
+            <span class="elements">Downloads</span>
+            ${image.downloads}
+          </div>
+        </div>
+      </li>
+    `;
+  }).join('');
+  return markup;
+}
 
 function showLoader(){
   loader.classList.remove("hidden");
