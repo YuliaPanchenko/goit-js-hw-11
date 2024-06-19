@@ -24,7 +24,6 @@
   -webkit-text-size-adjust: 100%;
 }
 
-
 .gallery-form {
   display: flex;
   flex-direction: column;
@@ -34,11 +33,13 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .galery-container {
   display: flex;
   align-items: center;
   margin-bottom: 20px; /* Додає відступ знизу для галереї */
 }
+
 .get-img {
   width: 300px;
   padding: 10px;
@@ -47,6 +48,7 @@
   font-size: 16px;
   margin-right: 10px; /* Простір між полем вводу та кнопкою */
 }
+
 .btn {
   padding: 10px 20px;
   background-color: #007BFF;
@@ -56,9 +58,11 @@
   cursor: pointer;
   font-size: 16px;
 }
+
 .btn:hover {
   background-color: #0056b3;
 }
+
 .gallery {
   display: flex;
   flex-wrap: wrap;
@@ -67,29 +71,52 @@
   padding: 0;
   margin: 20px 0 0;
 }
+
+/* .card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 300px;
+} */
 .card {
   border: 1px solid #ccc;
   border-radius: 4px;
   overflow: hidden;
   width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
+
+.card-link {
+  display: flex;
+  flex-direction:inherit;
+  justify-content:space-between;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
 .card img {
   width: 100%;
   display: block;
 }
-.card .stats {
+
+.stats {
   display: flex;
   justify-content: space-around;
   padding: 10px;
   background-color: #f7f7f7;
 }
-.card .stats div {
+
+.stats-item {
   text-align: center;
 }
 
-.elements {
-  display: block;
+.stats-item .elements {
   font-weight: bold;
+  margin: 0;
+  padding: 0;
 }
 
 
