@@ -6,8 +6,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 import getImages from "./js/pixabay-api"
 import renderImages from "./js/render-functions"
-// import showLoader from "./js/render-functions"
-// import hideLoader from "./js/render-functions"
+
 
 const form = document.querySelector(".gallery-form");
 const btnElem= document.querySelector(".btn");
@@ -42,7 +41,9 @@ form.addEventListener("submit", (e)=> {
     });
     lightbox.refresh();
   })
-    .catch(err=>{})
+    .catch(err=>{
+      console.log(err);
+    })
     .finally(()=>{
       hideLoader();
     });
